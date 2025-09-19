@@ -2,8 +2,6 @@ package com.project.login_page.service;
 
 import com.project.login_page.domain.Account;
 import com.project.login_page.domain.User;
-import com.project.login_page.dto.UpdateDailyStreakDTO;
-import com.project.login_page.dto.UpdateStudyTimeDTO;
 import com.project.login_page.repository.AccountRepository;
 import com.project.login_page.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,7 +19,7 @@ public class AccountService {
     }
 
     @Transactional
-    public Account updateDailyStreak(String currentUsername, UpdateDailyStreakDTO updateDailyStreakDTO){
+    public Account updateDailyStreak(String currentUsername){
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
@@ -30,15 +28,14 @@ public class AccountService {
             throw new RuntimeException("Conta não encontrada para o usuário " + currentUsername);
         }
 
-        if(updateDailyStreakDTO.getNewOffensive() >= 0){
-            account.setDailyStreak(updateDailyStreakDTO.getNewOffensive());
-        }
+        int currentStreak = account.getDailyStreak();
+        account.setDailyStreak(currentStreak + 1);
 
         return accountRepository.save(account);
     }
 
     @Transactional
-    public Account updateMinutesStudied(String currentUsername, UpdateStudyTimeDTO updateStudyTimeDTO){
+    public Account updateMinutesStudied(String currentUsername){
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
@@ -47,9 +44,9 @@ public class AccountService {
             throw new RuntimeException("Conta não encontrada para o usuário " + currentUsername);
         }
 
-        if(updateStudyTimeDTO.getAddMinutes() >= 0){
-            account.setMinutesStudied(updateStudyTimeDTO.getAddMinutes());
-        }
+        long currentTimeStudied = account.getMinutesStudied();
+        account.setMinutesStudied(currentTimeStudied + 25);
+
 
         return accountRepository.save(account);
     }
