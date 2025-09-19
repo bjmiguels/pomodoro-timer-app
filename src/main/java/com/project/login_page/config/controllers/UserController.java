@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PatchMapping("/{username}")
+    @PatchMapping("/{username}/reset-username")
     public ResponseEntity<String> updateCurrentUsername(@PathVariable String username, @RequestBody UpdateUsernameDTO updateUsernameDTO){
         String newUsername = updateUsernameDTO.getNewUsername();
 
