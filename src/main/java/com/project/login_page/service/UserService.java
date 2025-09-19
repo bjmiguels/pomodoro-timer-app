@@ -1,5 +1,6 @@
 package com.project.login_page.service;
 
+import com.project.login_page.domain.Account;
 import com.project.login_page.domain.User;
 import com.project.login_page.dto.*;
 import com.project.login_page.repository.UserRepository;
@@ -26,6 +27,11 @@ public class UserService {
         user.setPassword(hashedPassword);
 
         User savedUser = userRepository.save(user);
+
+        Account newAccount = new Account();
+
+        user.setAccount(newAccount);
+        newAccount.setUser(savedUser);
 
         return savedUser;
     }

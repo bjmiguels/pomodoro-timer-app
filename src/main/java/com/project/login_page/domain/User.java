@@ -31,4 +31,8 @@ public class User {
     @Column(length = 255, nullable = false)
     private String password;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "id_account")
+    private Account account;
+
 }
